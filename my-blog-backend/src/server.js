@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb'
-
+import path from 'path'
 
 // const articlesInfo = {
 //  'learn-react': {
@@ -18,7 +18,9 @@ import { MongoClient } from 'mongodb'
 // }
 
 const app = express();
-
+//launch this app
+app.use(express.static(path.join(__dirname, 'build')))
+//launch this app end
 app.use(bodyParser.json())
 
 const withDB = async (operations) => {
@@ -85,7 +87,10 @@ app.post('/api/articles/:name/add-comment', (req, res) => {
 
 })
 
-
-
+//launch this app
+app.get('*', (req, res) => {
+ res.sendFile(path.join(__dirname + '/build/index.html'));
+})
+//end launch this app
 
 app.listen(8000, () => console.log('listening 8000'));
